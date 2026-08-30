@@ -33,20 +33,39 @@
             z-index: 100;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
-            padding: 12px 18px;
+            padding: 10px 16px;
             border-radius: 40px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.5);
             display: flex;
             align-items: center;
             gap: 12px;
-            max-width: 200px;
         }
 
-        .music-player iframe {
-            border-radius: 20px;
-            width: 160px;
-            height: 80px;
+        .music-player button {
+            background: #880e4f;
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-player button:hover {
+            transform: scale(1.1);
+            background: #ad1457;
+        }
+
+        .music-player span {
+            font-size: 13px;
+            color: #880e4f;
+            font-weight: 500;
         }
 
         /* ---- ENVELOPE (initial state) ---- */
@@ -390,11 +409,11 @@
                 top: 12px;
                 right: 12px;
                 padding: 8px 12px;
-                max-width: 160px;
             }
-            .music-player iframe {
-                width: 120px;
-                height: 60px;
+            .music-player button {
+                width: 30px;
+                height: 30px;
+                font-size: 13px;
             }
             .exit-button {
                 padding: 12px 30px;
@@ -411,13 +430,14 @@
 </head>
 <body>
 
-    <!-- ---- MUSIC PLAYER (Spotify) ---- -->
+    <!-- ---- MUSIC PLAYER (MP3) ---- -->
     <div class="music-player">
-        <iframe 
-            src="https://open.spotify.com/embed/track/5mtTAScDytxMMqZj14NmlN?utm_source=generator&theme=0" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
-        </iframe>
+        <button id="musicBtn" aria-label="Play music">▶</button>
+        <span>🎵 love.</span>
+        <audio id="audioPlayer" loop>
+            <source src="love.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     </div>
 
     <!-- ---- ENVELOPE (click to open) ---- -->
@@ -482,6 +502,38 @@
     </div>
 
     <script>
+        // ---- MUSIC PLAYER ----
+        const audio = document.getElementById('audioPlayer');
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.textContent = '▶';
+                musicBtn.style.background = '#880e4f';
+                isPlaying = false;
+            } else {
+                audio.play();
+                musicBtn.textContent = '⏸';
+                musicBtn.style.background = '#ad1457';
+                isPlaying = true;
+            }
+        });
+
+        // Auto-play when letter opens
+        function autoPlayMusic() {
+            if (!isPlaying) {
+                audio.play().catch(function(error) {
+                    // Auto-play was blocked – user needs to click the button
+                    console.log('Auto-play blocked. User must click play.');
+                });
+                musicBtn.textContent = '⏸';
+                musicBtn.style.background = '#ad1457';
+                isPlaying = true;
+            }
+        }
+
         // ---- ENVELOPE REVEAL ----
         const envelopeContainer = document.getElementById('envelopeContainer');
         const letterContainer = document.getElementById('letterContainer');
@@ -498,6 +550,9 @@
 
                 // Trigger confetti & hearts
                 createCelebration();
+
+                // Auto-play music (if browser allows)
+                autoPlayMusic();
 
                 // Scroll to top of letter on mobile
                 if (window.innerWidth <= 600) {
