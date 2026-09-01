@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💕 Gift</title>
+    <title>💕 For MJ</title>
     <style>
         /* ---- RESET & BASE ---- */
         * {
@@ -100,7 +100,7 @@
         /* ---- LETTER (revealed state) ---- */
         .letter-container {
             display: none;
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             animation: fadeInUp 1s ease;
         }
@@ -176,7 +176,7 @@
             font-size: 1.4rem;
         }
 
-        /* ---- VIRTUAL FLOWER ---- */
+        /* ---- BIG BOUQUET ---- */
         .flower-section {
             text-align: center;
             margin: 30px 0 20px;
@@ -194,25 +194,33 @@
             display: block;
         }
 
-        .flower-container {
-            display: flex;
-            justify-content: center;
+        .bouquet {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            justify-items: center;
             align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         .flower {
-            font-size: 80px;
+            font-size: 60px;
             cursor: pointer;
             transition: all 0.3s ease;
             user-select: none;
             position: relative;
             display: inline-block;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .flower:hover {
-            transform: scale(1.1) rotate(-10deg);
+            transform: scale(1.15) rotate(-10deg);
         }
 
         .flower.tapped {
@@ -224,7 +232,7 @@
                 transform: scale(0.5) rotate(0deg);
             }
             50% {
-                transform: scale(1.3) rotate(-15deg);
+                transform: scale(1.4) rotate(-15deg);
             }
             100% {
                 transform: scale(1) rotate(0deg);
@@ -233,7 +241,7 @@
 
         .flower .sparkle {
             position: absolute;
-            font-size: 20px;
+            font-size: 18px;
             pointer-events: none;
             animation: sparkleFloat 1.5s ease forwards;
         }
@@ -249,25 +257,18 @@
             }
         }
 
-        .flower-text {
-            font-size: 0.85rem;
-            color: #880e4f;
-            opacity: 0.6;
-            margin-top: 10px;
-            transition: all 0.3s ease;
-            display: block;
-        }
-
-        .flower-text.active {
-            opacity: 1;
-            font-weight: 600;
-            color: #c2185b;
-        }
-
         .flower-emoji {
-            font-size: 60px;
+            font-size: 45px;
             animation: flowerFloat 3s ease-in-out infinite;
             display: block;
+            line-height: 1;
+        }
+
+        .flower-emoji:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+        .flower-emoji:nth-child(3n) {
+            animation-delay: 1s;
         }
 
         @keyframes flowerFloat {
@@ -278,6 +279,24 @@
             50% {
                 transform: translateY(-8px);
             }
+        }
+
+        .flower-text {
+            font-size: 0.65rem;
+            color: #880e4f;
+            opacity: 0;
+            margin-top: 4px;
+            transition: all 0.3s ease;
+            display: block;
+            position: absolute;
+            bottom: -18px;
+            white-space: nowrap;
+        }
+
+        .flower-text.active {
+            opacity: 1;
+            font-weight: 600;
+            color: #c2185b;
         }
 
         /* ---- PETALS (floating) ---- */
@@ -462,6 +481,40 @@
         }
 
         /* ---- RESPONSIVE ---- */
+        @media (max-width: 550px) {
+            .bouquet {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+            .flower {
+                font-size: 45px;
+                width: 55px;
+                height: 55px;
+            }
+            .flower-emoji {
+                font-size: 35px;
+            }
+            .flower-text {
+                font-size: 0.55rem;
+                bottom: -16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .bouquet {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .flower {
+                font-size: 40px;
+                width: 50px;
+                height: 50px;
+            }
+            .flower-emoji {
+                font-size: 30px;
+            }
+        }
+
         @media (max-width: 500px) {
             .envelope {
                 padding: 35px 25px;
@@ -493,15 +546,6 @@
             .exit-content .big-emoji {
                 font-size: 60px;
             }
-            .flower {
-                font-size: 60px;
-            }
-            .flower-emoji {
-                font-size: 45px;
-            }
-            .flower-container {
-                gap: 15px;
-            }
         }
     </style>
 </head>
@@ -512,7 +556,7 @@
         <div class="envelope">
             <span class="envelope-emoji">🎁</span>
             <h2>For MJ</h2>
-            <p class="sub">A little something for you 💕</p>
+            <p class="sub">A big bouquet just for you 💕</p>
             <p class="tap-hint">👆 tap to open</p>
         </div>
     </div>
@@ -533,22 +577,11 @@
                     <span class="heart">💕</span>
                 </div>
 
-                <!-- ---- VIRTUAL FLOWER SECTION ---- -->
+                <!-- ---- BIG BOUQUET ---- -->
                 <div class="flower-section">
-                    <span class="flower-label">🌸 Tap the flowers to make them bloom!</span>
-                    <div class="flower-container">
-                        <div class="flower" id="flower1">
-                            <span class="flower-emoji" id="flowerEmoji1">🌹</span>
-                            <span class="flower-text" id="flowerText1">🌱 Tap me!</span>
-                        </div>
-                        <div class="flower" id="flower2">
-                            <span class="flower-emoji" id="flowerEmoji2">🌸</span>
-                            <span class="flower-text" id="flowerText2">🌱 Tap me!</span>
-                        </div>
-                        <div class="flower" id="flower3">
-                            <span class="flower-emoji" id="flowerEmoji3">🌷</span>
-                            <span class="flower-text" id="flowerText3">🌱 Tap me!</span>
-                        </div>
+                    <span class="flower-label">🌸 Tap any flower to make the whole bouquet bloom!</span>
+                    <div class="bouquet" id="bouquet">
+                        <!-- Flowers will be generated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -602,23 +635,23 @@
                     const gain1 = this.ctx.createGain();
                     osc1.type = 'sine';
                     osc1.frequency.setValueAtTime(523 + Math.random() * 100, this.ctx.currentTime);
-                    gain1.gain.setValueAtTime(0.3, this.ctx.currentTime);
-                    gain1.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.8);
+                    gain1.gain.setValueAtTime(0.25, this.ctx.currentTime);
+                    gain1.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.6);
                     osc1.connect(gain1);
                     gain1.connect(this.ctx.destination);
                     osc1.start(this.ctx.currentTime);
-                    osc1.stop(this.ctx.currentTime + 0.8);
+                    osc1.stop(this.ctx.currentTime + 0.6);
 
                     const osc2 = this.ctx.createOscillator();
                     const gain2 = this.ctx.createGain();
                     osc2.type = 'sine';
                     osc2.frequency.setValueAtTime(659 + Math.random() * 80, this.ctx.currentTime);
-                    gain2.gain.setValueAtTime(0.2, this.ctx.currentTime);
-                    gain2.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.7);
+                    gain2.gain.setValueAtTime(0.18, this.ctx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.5);
                     osc2.connect(gain2);
                     gain2.connect(this.ctx.destination);
-                    osc2.start(this.ctx.currentTime + 0.1);
-                    osc2.stop(this.ctx.currentTime + 0.8);
+                    osc2.start(this.ctx.currentTime + 0.08);
+                    osc2.stop(this.ctx.currentTime + 0.6);
                 } catch (e) {
                     console.log('Sound play error:', e);
                 }
@@ -629,18 +662,18 @@
                 if (!this.ctx) return;
 
                 try {
-                    const notes = [523, 659, 784, 1047];
+                    const notes = [523, 659, 784];
                     notes.forEach((freq, i) => {
                         const osc = this.ctx.createOscillator();
                         const gain = this.ctx.createGain();
                         osc.type = 'sine';
-                        osc.frequency.setValueAtTime(freq + Math.random() * 50, this.ctx.currentTime + i * 0.05);
-                        gain.gain.setValueAtTime(0.15, this.ctx.currentTime + i * 0.05);
-                        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.05 + 0.3);
+                        osc.frequency.setValueAtTime(freq + Math.random() * 50, this.ctx.currentTime + i * 0.06);
+                        gain.gain.setValueAtTime(0.12, this.ctx.currentTime + i * 0.06);
+                        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.06 + 0.25);
                         osc.connect(gain);
                         gain.connect(this.ctx.destination);
-                        osc.start(this.ctx.currentTime + i * 0.05);
-                        osc.stop(this.ctx.currentTime + i * 0.05 + 0.3);
+                        osc.start(this.ctx.currentTime + i * 0.06);
+                        osc.stop(this.ctx.currentTime + i * 0.06 + 0.25);
                     });
                 } catch (e) {
                     console.log('Sparkle sound error:', e);
@@ -657,13 +690,13 @@
                         const osc = this.ctx.createOscillator();
                         const gain = this.ctx.createGain();
                         osc.type = 'sine';
-                        osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.12);
-                        gain.gain.setValueAtTime(0.2, this.ctx.currentTime + i * 0.12);
-                        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.12 + 0.3);
+                        osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.1);
+                        gain.gain.setValueAtTime(0.18, this.ctx.currentTime + i * 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.1 + 0.25);
                         osc.connect(gain);
                         gain.connect(this.ctx.destination);
-                        osc.start(this.ctx.currentTime + i * 0.12);
-                        osc.stop(this.ctx.currentTime + i * 0.12 + 0.3);
+                        osc.start(this.ctx.currentTime + i * 0.1);
+                        osc.stop(this.ctx.currentTime + i * 0.1 + 0.25);
                     });
                 } catch (e) {
                     console.log('Celebration sound error:', e);
@@ -672,6 +705,159 @@
         }
 
         const sound = new SoundEngine();
+
+        // ---- GENERATE BOUQUET ----
+        const flowerEmojis = ['🌹', '🌸', '🌷', '🌻', '🌺', '💐', '🌼', '🏵️', '🌸', '🌹', '🌷', '🌺', '🌻', '🌸', '🌷', '🌹'];
+        const bouquet = document.getElementById('bouquet');
+
+        flowerEmojis.forEach((emoji, index) => {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.dataset.index = index;
+
+            const emojiSpan = document.createElement('span');
+            emojiSpan.className = 'flower-emoji';
+            emojiSpan.textContent = emoji;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'flower-text';
+            textSpan.textContent = '🌱';
+
+            flower.appendChild(emojiSpan);
+            flower.appendChild(textSpan);
+            bouquet.appendChild(flower);
+        });
+
+        // ---- FLOWER INTERACTION ----
+        const flowers = document.querySelectorAll('.flower');
+        let bloomedCount = 0;
+        const totalFlowers = flowers.length;
+        const bloomMessages = [
+            '🌸 A flower blooms!',
+            '🌺 Another one!',
+            '🌷 So beautiful!',
+            '🌻 Keep going!',
+            '🌼 Almost there!',
+            '💐 So many flowers!',
+            '✨ You\'re making them bloom!',
+            '💕 Beautiful!',
+            '🌹 So lovely!',
+            '🌸 The bouquet is growing!'
+        ];
+
+        flowers.forEach((flower, index) => {
+            flower.addEventListener('click', function(e) {
+                // Sound effects
+                sound.playBloomSound();
+                sound.playSparkleSound();
+
+                // Animation
+                this.classList.remove('tapped');
+                void this.offsetWidth;
+                this.classList.add('tapped');
+
+                // Change text
+                const text = this.querySelector('.flower-text');
+                text.textContent = '🌸';
+                text.classList.add('active');
+
+                // Sparkles
+                createSparkles(e, this);
+
+                // Count bloomed
+                if (!this.dataset.bloomed) {
+                    this.dataset.bloomed = 'true';
+                    bloomedCount++;
+
+                    // Show message
+                    const msg = bloomMessages[Math.min(bloomedCount - 1, bloomMessages.length - 1)];
+                    showFloatingMessage(msg);
+
+                    // Check if all bloomed
+                    if (bloomedCount === totalFlowers) {
+                        setTimeout(() => {
+                            sound.playCelebrationSound();
+                            createCelebration();
+                            showFloatingMessage('💐 The whole bouquet is blooming for you! 💕');
+                        }, 500);
+                    }
+                }
+
+                // Petals
+                createPetals();
+
+                setTimeout(() => {
+                    text.classList.remove('active');
+                }, 2500);
+            });
+        });
+
+        // ---- SPARKLES ----
+        function createSparkles(event, element) {
+            const rect = element.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const sparkleEmojis = ['✨', '⭐', '💫', '🌟'];
+
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('span');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+                sparkle.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+                sparkle.style.top = (y + (Math.random() - 0.5) * 50) + 'px';
+                sparkle.style.setProperty('--tx', (Math.random() - 0.5) * 120 + 'px');
+                sparkle.style.setProperty('--ty', (Math.random() - 0.5) * 120 - 80 + 'px');
+                sparkle.style.fontSize = (Math.random() * 16 + 10) + 'px';
+                element.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1400);
+            }
+        }
+
+        // ---- FLOATING MESSAGE ----
+        function showFloatingMessage(msg) {
+            const div = document.createElement('div');
+            div.style.cssText = `
+                position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                background: rgba(255,255,255,0.95); padding: 12px 30px;
+                border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                font-size: 1.1rem; color: #880e4f; font-weight: 600;
+                z-index: 2000; text-align: center; border: 2px solid #f8bbd0;
+                animation: fadeInUp 0.5s ease; max-width: 90%;
+                transition: opacity 0.5s ease;
+            `;
+            div.textContent = msg;
+            document.body.appendChild(div);
+
+            setTimeout(() => {
+                div.style.opacity = '0';
+                setTimeout(() => div.remove(), 500);
+            }, 2500);
+        }
+
+        // ---- PETALS ----
+        function createPetals() {
+            const petalEmojis = ['🌸', '🌺', '🌷', '🌹', '💮', '🏵️'];
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const petal = document.createElement('div');
+                    petal.className = 'petal';
+                    petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+                    petal.style.left = (Math.random() * 90 + 5) + '%';
+                    petal.style.top = '-20px';
+                    petal.style.fontSize = (Math.random() * 18 + 16) + 'px';
+                    petal.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    petal.style.animationDelay = (Math.random() * 0.5) + 's';
+                    document.body.appendChild(petal);
+
+                    setTimeout(() => {
+                        petal.remove();
+                    }, 5000);
+                }, i * 80);
+            }
+        }
 
         // ---- ENVELOPE REVEAL ----
         const envelopeContainer = document.getElementById('envelopeContainer');
@@ -693,119 +879,6 @@
             }, 600);
         });
 
-        // ---- VIRTUAL FLOWER ----
-        const flowers = [
-            { id: 'flower1', emoji: 'flowerEmoji1', text: 'flowerText1', emojis: ['🌹', '🥀', '🌺'], texts: ['🌱 Tap me!', 'You made me bloom! 🌸', 'So beautiful! ✨'] },
-            { id: 'flower2', emoji: 'flowerEmoji2', text: 'flowerText2', emojis: ['🌸', '🌼', '🌺'], texts: ['🌱 Tap me!', 'I bloomed for you! 💖', 'You\'re amazing! ✨'] },
-            { id: 'flower3', emoji: 'flowerEmoji3', text: 'flowerText3', emojis: ['🌷', '🌻', '🌺'], texts: ['🌱 Tap me!', 'You make me smile! 😊', 'So special! 💫'] }
-        ];
-
-        let bloomCount = 0;
-
-        flowers.forEach((flowerData) => {
-            const flowerEl = document.getElementById(flowerData.id);
-            const emojiEl = document.getElementById(flowerData.emoji);
-            const textEl = document.getElementById(flowerData.text);
-            let tapCount = 0;
-
-            flowerEl.addEventListener('click', function(e) {
-                sound.playBloomSound();
-                sound.playSparkleSound();
-
-                flowerEl.classList.remove('tapped');
-                void flowerEl.offsetWidth;
-                flowerEl.classList.add('tapped');
-
-                tapCount = (tapCount + 1) % flowerData.emojis.length;
-                emojiEl.textContent = flowerData.emojis[tapCount];
-                textEl.textContent = flowerData.texts[tapCount];
-                textEl.classList.add('active');
-
-                createSparkles(e, flowerEl);
-                createPetals();
-
-                bloomCount++;
-                if (bloomCount >= 9) {
-                    setTimeout(() => {
-                        sound.playCelebrationSound();
-                        createCelebration();
-                        showMessage('🌸 All flowers are blooming for you! 💕');
-                    }, 500);
-                }
-
-                setTimeout(() => {
-                    textEl.classList.remove('active');
-                }, 3000);
-            });
-        });
-
-        // ---- SPARKLES ----
-        function createSparkles(event, element) {
-            const rect = element.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            const sparkles = ['✨', '⭐', '💫', '🌟'];
-
-            for (let i = 0; i < 6; i++) {
-                const sparkle = document.createElement('span');
-                sparkle.className = 'sparkle';
-                sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
-                sparkle.style.left = (x + (Math.random() - 0.5) * 60) + 'px';
-                sparkle.style.top = (y + (Math.random() - 0.5) * 60) + 'px';
-                sparkle.style.setProperty('--tx', (Math.random() - 0.5) * 150 + 'px');
-                sparkle.style.setProperty('--ty', (Math.random() - 0.5) * 150 - 100 + 'px');
-                sparkle.style.fontSize = (Math.random() * 20 + 12) + 'px';
-                element.appendChild(sparkle);
-
-                setTimeout(() => {
-                    sparkle.remove();
-                }, 1500);
-            }
-        }
-
-        // ---- PETALS ----
-        function createPetals() {
-            const petalEmojis = ['🌸', '🌺', '🌷', '🌹', '💮', '🏵️'];
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    const petal = document.createElement('div');
-                    petal.className = 'petal';
-                    petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-                    petal.style.left = (Math.random() * 90 + 5) + '%';
-                    petal.style.top = '-20px';
-                    petal.style.fontSize = (Math.random() * 20 + 18) + 'px';
-                    petal.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                    petal.style.animationDelay = (Math.random() * 0.5) + 's';
-                    document.body.appendChild(petal);
-
-                    setTimeout(() => {
-                        petal.remove();
-                    }, 5000);
-                }, i * 100);
-            }
-        }
-
-        // ---- MESSAGE POPUP ----
-        function showMessage(msg) {
-            const div = document.createElement('div');
-            div.style.cssText = `
-                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                background: rgba(255,255,255,0.95); padding: 20px 40px;
-                border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-                font-size: 1.3rem; color: #880e4f; font-weight: 600;
-                z-index: 2000; text-align: center; border: 2px solid #f8bbd0;
-                animation: fadeIn 0.5s ease; max-width: 90%;
-            `;
-            div.textContent = msg;
-            document.body.appendChild(div);
-
-            setTimeout(() => {
-                div.style.transition = 'opacity 0.5s ease';
-                div.style.opacity = '0';
-                setTimeout(() => div.remove(), 500);
-            }, 3000);
-        }
-
         // ---- EXIT BUTTON ----
         const exitButton = document.getElementById('exitButton');
         const exitOverlay = document.getElementById('exitOverlay');
@@ -819,15 +892,15 @@
 
         // ---- CELEBRATION EFFECTS ----
         function createCelebration() {
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => createHeart(), i * 100);
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => createHeart(), i * 80);
             }
             const colors = ['#e91e63', '#f06292', '#f8bbd0', '#ff4081', '#c2185b', '#880e4f'];
-            for (let i = 0; i < 80; i++) {
-                setTimeout(() => createConfetti(colors), i * 60);
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => createConfetti(colors), i * 50);
             }
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => createPetals(), i * 150);
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => createPetals(), i * 120);
             }
         }
 
@@ -837,7 +910,7 @@
             heart.textContent = ['💕', '❤️', '💗', '💖', '💘', '💝'][Math.floor(Math.random() * 6)];
             heart.style.left = Math.random() * 90 + 5 + '%';
             heart.style.top = Math.random() * 60 + 20 + '%';
-            heart.style.fontSize = Math.random() * 20 + 18 + 'px';
+            heart.style.fontSize = Math.random() * 18 + 16 + 'px';
             heart.style.animationDuration = Math.random() * 2 + 2 + 's';
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 4000);
