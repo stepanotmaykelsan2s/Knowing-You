@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💕 For MJ</title>
+    <title>💕 Gift</title>
     <style>
         /* ---- RESET & BASE ---- */
         * {
@@ -23,49 +23,6 @@
             transition: background 0.5s ease;
             position: relative;
             overflow-x: hidden;
-        }
-
-        /* ---- MUSIC PLAYER (top-right) ---- */
-        .music-player {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 10px 16px;
-            border-radius: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .music-player button {
-            background: #880e4f;
-            border: none;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .music-player button:hover {
-            transform: scale(1.1);
-            background: #ad1457;
-        }
-
-        .music-player span {
-            font-size: 13px;
-            color: #880e4f;
-            font-weight: 500;
         }
 
         /* ---- ENVELOPE (initial state) ---- */
@@ -202,27 +159,152 @@
             font-size: 1.05rem;
             line-height: 1.9;
             font-weight: 400;
+            text-align: center;
         }
 
-        .letter-body p {
-            margin-bottom: 18px;
+        .letter-body .message {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(248, 187, 208, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(248, 187, 208, 0.3);
         }
 
-        .letter-body .highlight {
+        .letter-body .message .heart {
+            color: #e91e63;
+            font-size: 1.4rem;
+        }
+
+        /* ---- VIRTUAL FLOWER ---- */
+        .flower-section {
+            text-align: center;
+            margin: 30px 0 20px;
+            padding: 25px 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .flower-section .flower-label {
+            font-size: 0.9rem;
+            color: #ad1457;
+            opacity: 0.7;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .flower-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .flower {
+            font-size: 80px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            position: relative;
+            display: inline-block;
+        }
+
+        .flower:hover {
+            transform: scale(1.1) rotate(-10deg);
+        }
+
+        .flower.tapped {
+            animation: flowerBloom 0.8s ease;
+        }
+
+        @keyframes flowerBloom {
+            0% {
+                transform: scale(0.5) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.3) rotate(-15deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .flower .sparkle {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none;
+            animation: sparkleFloat 1.5s ease forwards;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(1.5);
+            }
+        }
+
+        .flower-text {
+            font-size: 0.85rem;
             color: #880e4f;
-            font-weight: 600;
+            opacity: 0.6;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            display: block;
         }
 
-        .letter-body .big-like {
-            font-size: 1.1rem;
+        .flower-text.active {
+            opacity: 1;
             font-weight: 600;
             color: #c2185b;
-            text-align: center;
-            display: block;
-            margin: 20px 0;
-            letter-spacing: 0.5px;
         }
 
+        .flower-emoji {
+            font-size: 60px;
+            animation: flowerFloat 3s ease-in-out infinite;
+            display: block;
+        }
+
+        @keyframes flowerFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* ---- PETALS (floating) ---- */
+        .petal {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 999;
+            animation: petalFall linear forwards;
+            opacity: 0.8;
+        }
+
+        @keyframes petalFall {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px) rotate(0deg) scale(0.5);
+            }
+            10% {
+                opacity: 0.9;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(110vh) rotate(720deg) scale(1);
+            }
+        }
+
+        /* ---- LETTER FOOTER ---- */
         .letter-footer {
             margin-top: 30px;
             text-align: right;
@@ -234,14 +316,6 @@
             font-size: 1.1rem;
             color: #880e4f;
             font-weight: 600;
-        }
-
-        .letter-footer .waiting {
-            font-size: 0.95rem;
-            color: #ad1457;
-            opacity: 0.8;
-            margin-top: 8px;
-            font-style: italic;
         }
 
         .letter-footer .heart-end {
@@ -405,15 +479,9 @@
             .letter-header h1 {
                 font-size: 1.5rem;
             }
-            .music-player {
-                top: 12px;
-                right: 12px;
-                padding: 8px 12px;
-            }
-            .music-player button {
-                width: 30px;
-                height: 30px;
-                font-size: 13px;
+            .letter-body .message {
+                font-size: 1rem;
+                padding: 15px;
             }
             .exit-button {
                 padding: 12px 30px;
@@ -425,30 +493,26 @@
             .exit-content .big-emoji {
                 font-size: 60px;
             }
-            .letter-body .big-like {
-                font-size: 1rem;
+            .flower {
+                font-size: 60px;
+            }
+            .flower-emoji {
+                font-size: 45px;
+            }
+            .flower-container {
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ---- MUSIC PLAYER (MP3) ---- -->
-    <div class="music-player">
-        <button id="musicBtn" aria-label="Play music">▶</button>
-        <span>🎵 love.</span>
-        <audio id="audioPlayer" loop>
-            <source src="love.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
-
     <!-- ---- ENVELOPE (click to open) ---- -->
     <div class="envelope-container" id="envelopeContainer">
         <div class="envelope">
-            <span class="envelope-emoji">✉️</span>
+            <span class="envelope-emoji">🎁</span>
             <h2>For MJ</h2>
-            <p class="sub">Something for you 💕</p>
+            <p class="sub">A little something for you 💕</p>
             <p class="tap-hint">👆 tap to open</p>
         </div>
     </div>
@@ -457,39 +521,46 @@
     <div class="letter-container" id="letterContainer">
         <div class="letter">
             <div class="letter-header">
-                <div class="to">💌 For</div>
+                <div class="to">💕 For</div>
                 <h1>MJ</h1>
             </div>
 
             <div class="letter-body">
-                <p>Knowing you is one of the most unexpected things that has happened in my life, and I want you to know that I'm <span class="highlight">very genuine and serious</span> about this.</p>
+                <div class="message">
+                    <span class="heart">💖</span><br /><br />
+                    Thanks for listening to me last night...<br />
+                    it meant more than you know.<br /><br />
+                    <span class="heart">💕</span>
+                </div>
 
-                <p>This might be the day I stop being a <em>torpe</em> because I've always been the guy who's afraid of rejection.</p>
-
-                <p>But now, I'm willing to take the risk and finally be honest with you.</p>
-
-                <p><span class="highlight">I'm risking all of me</span> to tell you that...</p>
-
-                <span class="big-like">💖 I like you 💖</span>
-
-                <p>What started as a random friendship became something I never expected. From playing together, talking, teasing each other, and all the small moments we shared, you slowly became someone very special to me.</p>
-
-                <p>I don't expect you to have all the answers right away, and I don't want to pressure you into anything. I just want you to know how <span class="highlight">genuine</span> my feelings are.</p>
-
-                <p>Whatever happens, I'm happy that I got the chance to know you.</p>
-
-                <p>But if you'll let me, I want to keep getting to know you... and maybe slowly see where this unexpected story of ours can go. ❤️</p>
+                <!-- ---- VIRTUAL FLOWER SECTION ---- -->
+                <div class="flower-section">
+                    <span class="flower-label">🌸 Tap the flowers to make them bloom!</span>
+                    <div class="flower-container">
+                        <div class="flower" id="flower1">
+                            <span class="flower-emoji" id="flowerEmoji1">🌹</span>
+                            <span class="flower-text" id="flowerText1">🌱 Tap me!</span>
+                        </div>
+                        <div class="flower" id="flower2">
+                            <span class="flower-emoji" id="flowerEmoji2">🌸</span>
+                            <span class="flower-text" id="flowerText2">🌱 Tap me!</span>
+                        </div>
+                        <div class="flower" id="flower3">
+                            <span class="flower-emoji" id="flowerEmoji3">🌷</span>
+                            <span class="flower-text" id="flowerText3">🌱 Tap me!</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="letter-footer">
-                <div class="signature">Ron</div>
-                <div class="waiting">💕 I'll be here, waiting for your answer... whenever you're ready.</div>
+                <div class="signature">Yours, Ron 💕</div>
                 <div class="heart-end">💗</div>
             </div>
 
             <!-- ---- EXIT BUTTON ---- -->
             <div class="exit-button-container">
-                <button class="exit-button" id="exitButton">Thank You for Reading 💕</button>
+                <button class="exit-button" id="exitButton">✨ Close ✨</button>
             </div>
         </div>
     </div>
@@ -498,51 +569,115 @@
     <div class="exit-overlay" id="exitOverlay">
         <div class="exit-content">
             <span class="big-emoji">💖</span>
-            <h1>Thank You, MJ!</h1>
-            <p>You just made someone's day by reading this. 💕</p>
+            <h1>You're the best, MJ!</h1>
+            <p>I hope this made you smile. 💕</p>
             <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.6;">— Ron</p>
         </div>
     </div>
 
     <script>
-        // ---- MUSIC PLAYER ----
-        const audio = document.getElementById('audioPlayer');
-        const musicBtn = document.getElementById('musicBtn');
-        let isPlaying = false;
-
-        musicBtn.addEventListener('click', function() {
-            if (isPlaying) {
-                audio.pause();
-                musicBtn.textContent = '▶';
-                musicBtn.style.background = '#880e4f';
-                isPlaying = false;
-            } else {
-                audio.play();
-                musicBtn.textContent = '⏸';
-                musicBtn.style.background = '#ad1457';
-                isPlaying = true;
+        // ---- SOUND EFFECTS ENGINE ----
+        class SoundEngine {
+            constructor() {
+                this.ctx = null;
+                this.initialized = false;
             }
-        });
 
-        // Auto-play when letter opens
-        function autoPlayMusic() {
-            if (!isPlaying) {
-                audio.play().catch(function(error) {
-                    // Auto-play was blocked – user needs to click the button
-                    console.log('Auto-play blocked. User must click play.');
-                });
-                musicBtn.textContent = '⏸';
-                musicBtn.style.background = '#ad1457';
-                isPlaying = true;
+            init() {
+                if (this.initialized) return;
+                try {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    this.initialized = true;
+                } catch (e) {
+                    console.log('Web Audio not supported');
+                }
+            }
+
+            playBloomSound() {
+                this.init();
+                if (!this.ctx) return;
+
+                try {
+                    const osc1 = this.ctx.createOscillator();
+                    const gain1 = this.ctx.createGain();
+                    osc1.type = 'sine';
+                    osc1.frequency.setValueAtTime(523 + Math.random() * 100, this.ctx.currentTime);
+                    gain1.gain.setValueAtTime(0.3, this.ctx.currentTime);
+                    gain1.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.8);
+                    osc1.connect(gain1);
+                    gain1.connect(this.ctx.destination);
+                    osc1.start(this.ctx.currentTime);
+                    osc1.stop(this.ctx.currentTime + 0.8);
+
+                    const osc2 = this.ctx.createOscillator();
+                    const gain2 = this.ctx.createGain();
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(659 + Math.random() * 80, this.ctx.currentTime);
+                    gain2.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.7);
+                    osc2.connect(gain2);
+                    gain2.connect(this.ctx.destination);
+                    osc2.start(this.ctx.currentTime + 0.1);
+                    osc2.stop(this.ctx.currentTime + 0.8);
+                } catch (e) {
+                    console.log('Sound play error:', e);
+                }
+            }
+
+            playSparkleSound() {
+                this.init();
+                if (!this.ctx) return;
+
+                try {
+                    const notes = [523, 659, 784, 1047];
+                    notes.forEach((freq, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq + Math.random() * 50, this.ctx.currentTime + i * 0.05);
+                        gain.gain.setValueAtTime(0.15, this.ctx.currentTime + i * 0.05);
+                        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.05 + 0.3);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(this.ctx.currentTime + i * 0.05);
+                        osc.stop(this.ctx.currentTime + i * 0.05 + 0.3);
+                    });
+                } catch (e) {
+                    console.log('Sparkle sound error:', e);
+                }
+            }
+
+            playCelebrationSound() {
+                this.init();
+                if (!this.ctx) return;
+
+                try {
+                    const melody = [523, 587, 659, 784, 880, 784, 880, 1047];
+                    melody.forEach((freq, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.12);
+                        gain.gain.setValueAtTime(0.2, this.ctx.currentTime + i * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.12 + 0.3);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(this.ctx.currentTime + i * 0.12);
+                        osc.stop(this.ctx.currentTime + i * 0.12 + 0.3);
+                    });
+                } catch (e) {
+                    console.log('Celebration sound error:', e);
+                }
             }
         }
+
+        const sound = new SoundEngine();
 
         // ---- ENVELOPE REVEAL ----
         const envelopeContainer = document.getElementById('envelopeContainer');
         const letterContainer = document.getElementById('letterContainer');
 
         envelopeContainer.addEventListener('click', function() {
-            // Hide envelope with fade
             envelopeContainer.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             envelopeContainer.style.opacity = '0';
             envelopeContainer.style.transform = 'scale(0.95)';
@@ -550,19 +685,126 @@
             setTimeout(() => {
                 envelopeContainer.style.display = 'none';
                 letterContainer.style.display = 'block';
-
-                // Trigger confetti & hearts
                 createCelebration();
-
-                // Auto-play music (if browser allows)
-                autoPlayMusic();
-
-                // Scroll to top of letter on mobile
                 if (window.innerWidth <= 600) {
                     document.querySelector('.letter-container').scrollIntoView({ behavior: 'smooth' });
                 }
+                sound.init();
             }, 600);
         });
+
+        // ---- VIRTUAL FLOWER ----
+        const flowers = [
+            { id: 'flower1', emoji: 'flowerEmoji1', text: 'flowerText1', emojis: ['🌹', '🥀', '🌺'], texts: ['🌱 Tap me!', 'You made me bloom! 🌸', 'So beautiful! ✨'] },
+            { id: 'flower2', emoji: 'flowerEmoji2', text: 'flowerText2', emojis: ['🌸', '🌼', '🌺'], texts: ['🌱 Tap me!', 'I bloomed for you! 💖', 'You\'re amazing! ✨'] },
+            { id: 'flower3', emoji: 'flowerEmoji3', text: 'flowerText3', emojis: ['🌷', '🌻', '🌺'], texts: ['🌱 Tap me!', 'You make me smile! 😊', 'So special! 💫'] }
+        ];
+
+        let bloomCount = 0;
+
+        flowers.forEach((flowerData) => {
+            const flowerEl = document.getElementById(flowerData.id);
+            const emojiEl = document.getElementById(flowerData.emoji);
+            const textEl = document.getElementById(flowerData.text);
+            let tapCount = 0;
+
+            flowerEl.addEventListener('click', function(e) {
+                sound.playBloomSound();
+                sound.playSparkleSound();
+
+                flowerEl.classList.remove('tapped');
+                void flowerEl.offsetWidth;
+                flowerEl.classList.add('tapped');
+
+                tapCount = (tapCount + 1) % flowerData.emojis.length;
+                emojiEl.textContent = flowerData.emojis[tapCount];
+                textEl.textContent = flowerData.texts[tapCount];
+                textEl.classList.add('active');
+
+                createSparkles(e, flowerEl);
+                createPetals();
+
+                bloomCount++;
+                if (bloomCount >= 9) {
+                    setTimeout(() => {
+                        sound.playCelebrationSound();
+                        createCelebration();
+                        showMessage('🌸 All flowers are blooming for you! 💕');
+                    }, 500);
+                }
+
+                setTimeout(() => {
+                    textEl.classList.remove('active');
+                }, 3000);
+            });
+        });
+
+        // ---- SPARKLES ----
+        function createSparkles(event, element) {
+            const rect = element.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const sparkles = ['✨', '⭐', '💫', '🌟'];
+
+            for (let i = 0; i < 6; i++) {
+                const sparkle = document.createElement('span');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.style.left = (x + (Math.random() - 0.5) * 60) + 'px';
+                sparkle.style.top = (y + (Math.random() - 0.5) * 60) + 'px';
+                sparkle.style.setProperty('--tx', (Math.random() - 0.5) * 150 + 'px');
+                sparkle.style.setProperty('--ty', (Math.random() - 0.5) * 150 - 100 + 'px');
+                sparkle.style.fontSize = (Math.random() * 20 + 12) + 'px';
+                element.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1500);
+            }
+        }
+
+        // ---- PETALS ----
+        function createPetals() {
+            const petalEmojis = ['🌸', '🌺', '🌷', '🌹', '💮', '🏵️'];
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const petal = document.createElement('div');
+                    petal.className = 'petal';
+                    petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+                    petal.style.left = (Math.random() * 90 + 5) + '%';
+                    petal.style.top = '-20px';
+                    petal.style.fontSize = (Math.random() * 20 + 18) + 'px';
+                    petal.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    petal.style.animationDelay = (Math.random() * 0.5) + 's';
+                    document.body.appendChild(petal);
+
+                    setTimeout(() => {
+                        petal.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        // ---- MESSAGE POPUP ----
+        function showMessage(msg) {
+            const div = document.createElement('div');
+            div.style.cssText = `
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background: rgba(255,255,255,0.95); padding: 20px 40px;
+                border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+                font-size: 1.3rem; color: #880e4f; font-weight: 600;
+                z-index: 2000; text-align: center; border: 2px solid #f8bbd0;
+                animation: fadeIn 0.5s ease; max-width: 90%;
+            `;
+            div.textContent = msg;
+            document.body.appendChild(div);
+
+            setTimeout(() => {
+                div.style.transition = 'opacity 0.5s ease';
+                div.style.opacity = '0';
+                setTimeout(() => div.remove(), 500);
+            }, 3000);
+        }
 
         // ---- EXIT BUTTON ----
         const exitButton = document.getElementById('exitButton');
@@ -570,29 +812,22 @@
 
         exitButton.addEventListener('click', function() {
             exitOverlay.classList.add('show');
-            // Trigger more confetti & hearts for celebration
             createCelebration();
             createCelebration();
-            
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // ---- CELEBRATION EFFECTS ----
         function createCelebration() {
-            // Hearts
             for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    createHeart();
-                }, i * 100);
+                setTimeout(() => createHeart(), i * 100);
             }
-
-            // Confetti
             const colors = ['#e91e63', '#f06292', '#f8bbd0', '#ff4081', '#c2185b', '#880e4f'];
             for (let i = 0; i < 80; i++) {
-                setTimeout(() => {
-                    createConfetti(colors);
-                }, i * 60);
+                setTimeout(() => createConfetti(colors), i * 60);
+            }
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => createPetals(), i * 150);
             }
         }
 
@@ -605,10 +840,7 @@
             heart.style.fontSize = Math.random() * 20 + 18 + 'px';
             heart.style.animationDuration = Math.random() * 2 + 2 + 's';
             document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 4000);
+            setTimeout(() => heart.remove(), 4000);
         }
 
         function createConfetti(colors) {
@@ -623,13 +855,10 @@
             piece.style.animationDuration = Math.random() * 2 + 2 + 's';
             piece.style.transform = `rotate(${Math.random() * 360}deg)`;
             document.body.appendChild(piece);
-
-            setTimeout(() => {
-                piece.remove();
-            }, 4500);
+            setTimeout(() => piece.remove(), 4500);
         }
 
-        // ---- ADD SOME HEARTS IN BACKGROUND (gentle) ----
+        // ---- BACKGROUND HEARTS ----
         setInterval(() => {
             if (letterContainer.style.display === 'block' || exitOverlay.classList.contains('show')) {
                 createHeart();
